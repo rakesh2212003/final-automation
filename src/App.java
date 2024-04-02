@@ -90,22 +90,10 @@ public class App {
             "ACTIVE",
             "This product is made by team Corelynx"
         );
-        testProducts.createProduct(
-            "OOO",
-            "000002",
-            "Product",
-            "Software",
-            "USD",
-            "9876",
-            "Ranjan Jana",
-            "Ranjan LLC.",
-            "YES",
-            "ACTIVE",
-            "This product is made by team Corelynx"
-        );
         testEstimate.createEstimate("USD", "OOO");
         testEstimate.editEstimate("INR", "XXX");
         testEstimate.deleteEstimate();
+        testProducts.deleteProduct();
     }
 
     @Test
@@ -127,6 +115,8 @@ public class App {
         testInvoice.createInvoice("INR", "CPM");
         testInvoice.editInvoice("USD", "XXX");
         testInvoice.deleteInvoice();
+        testProducts.deleteProduct();
+        testEstimate.deleteEstimate();
     }
 
     @Test
@@ -148,7 +138,11 @@ public class App {
         testInvoice.createInvoice("INR", "CPM");
         testPayment.create("1234567890", "INR", "800", "Cash");
         testPayment.edit("9876543210", "INR", "900", "Check");
+        
         testPayment.delete();
+        testProducts.deleteProduct();
+        testEstimate.deleteEstimate();
+        testInvoice.deleteInvoice();
     }
 
     @Test

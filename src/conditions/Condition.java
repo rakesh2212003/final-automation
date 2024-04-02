@@ -37,4 +37,7 @@ public class Condition {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         actions.moveToElement(element).perform();
     }
+    public void waitUntilInvisible(By locator){
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
 }

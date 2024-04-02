@@ -2,6 +2,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -30,49 +31,74 @@ public class App {
 
         testAuth = new Auth(driver);
         testProducts = new Product(driver);
+        testEstimate = new Estimate(driver);
     }
 
-    @Test
-    public void test1(){
+    @BeforeClass
+    public void TEST_AUTH(){
         testAuth.performLogin("RakeshRana", "123456");
-        // testAuth.performLogout();
-    }
-
-    @Test
-    public void test2(){
-        testProducts.createProduct(
-            "abcd",
-            "000002",
-            "Product",
-            "Software",
-            "USD",
-            "9876",
-            "Ranjan Jana",
-            "Ranjan LLC.",
-            "YES",
-            "ACTIVE",
-            "This product is made by team Corelynx"
-        );
-        testProducts.editProduct(
-            "xyz",
-            "000001",
-            "Product",
-            "Software",
-            "INR",
-            "250",
-            "Rakesh Jana",
-            "Rakesh LLC.",
-            "YES",
-            "ACTIVE",
-            "This product is made by team Corelynx"
-        );
     }
 
     // @Test
-    // public void test3(){
-    // testEstimate = new Estimate(driver);
-    // testEstimate.createEstimate("INR", "www");
-    // // testEstimate.editEstimate("USD", "convergehub");
+    // public void TEST_PRODUCT(){
+    //     testProducts.createProduct(
+    //         "FFF",
+    //         "000002",
+    //         "Product",
+    //         "Software",
+    //         "USD",
+    //         "9876",
+    //         "Ranjan Jana",
+    //         "Ranjan LLC.",
+    //         "YES",
+    //         "ACTIVE",
+    //         "This product is made by team Corelynx"
+    //     );
+    //     testProducts.editProduct(
+    //         "SSS",
+    //         "000002",
+    //         "Product",
+    //         "Software",
+    //         "USD",
+    //         "9876",
+    //         "Ranjan Jana",
+    //         "Ranjan LLC.",
+    //         "YES",
+    //         "ACTIVE",
+    //         "This product is made by team Corelynx"
+    //     );
+    //     testProducts.editProduct(
+    //         "DDD",
+    //         "000002",
+    //         "Product",
+    //         "Software",
+    //         "USD",
+    //         "9876",
+    //         "Ranjan Jana",
+    //         "Ranjan LLC.",
+    //         "YES",
+    //         "ACTIVE",
+    //         "This product is made by team Corelynx"
+    //     );
+    //     testProducts.deleteProduct();
+    // }
+
+    // @Test
+    // public void TEST_ESTIMATE(){
+    //     testProducts.createProduct(
+    //         "myProduct",
+    //         "000001",
+    //         "Product",
+    //         "Software",
+    //         "USD",
+    //         "9999",
+    //         "Ranjan Jana",
+    //         "Ranjan LLC.",
+    //         "YES",
+    //         "ACTIVE",
+    //         "This product is made by team Corelynx"
+    //     );
+    //     testEstimate.createEstimate("USD", "myProduct");
     // }
 
     // @Test
@@ -95,7 +121,8 @@ public class App {
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() throws InterruptedException{
+        Thread.sleep(5000);
         driver.quit();
     }
 }

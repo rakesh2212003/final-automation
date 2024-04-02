@@ -1,6 +1,5 @@
 package modules.billing;
 
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
@@ -14,44 +13,69 @@ public class Product {
         condition = new Condition(driver);
     }
 
+    //create
     public void createProduct(String productName, String productCode, String productType, String productCategory, String currencyCode, String productPrice, String vendorName, String manufacturer, String isTaxable, String status, String description){
         goToProductModule();
+        addNew();
         addProduct(productName, productCode, productType, productCategory, currencyCode, productPrice, vendorName, manufacturer, isTaxable, status, description);
     }
+
+    //view
+    public void viewProduct(){
+        try{
+            goToProductModule();
+            condition.clickWhenClickable(ProductPaths.rowSetting);
+            condition.clickWhenClickable(ProductPaths.details);
+        }catch(TimeoutException e){
+            e.getStackTrace();
+        }
+    }
     
+    //edit
     public void editProduct(String productName, String productCode, String productType, String productCategory, String currencyCode, String productPrice, String vendorName, String manufacturer, String isTaxable, String status, String description){
         try{
-            condition.clickWhenClickable(ProductPaths.actionDrp);
-            condition.clickWhenClickable(ProductPaths.editBtn);
+            goToProductModule();
+            condition.clickWhenClickable(ProductPaths.rowSetting);
+            condition.clickWhenClickable(ProductPaths.edit);
             addProduct(productName, productCode, productType, productCategory, currencyCode, productPrice, vendorName, manufacturer, isTaxable, status, description);
-        }catch (StaleElementReferenceException e) {
-            editProduct(productName, productCode, productType, productCategory, currencyCode, productPrice, vendorName, manufacturer, isTaxable, status, description);
         }
         catch(TimeoutException e){
             e.getStackTrace();
         }
     }
 
-    // public void deleteProduct(){
-    //     try{
-    //         condition.clickWhenClickable(ProductPaths.actionDrp);
-    //         condition.clickWhenClickable(ProductPaths.deleteBtn);
-    //         condition.clickWhenClickable(ProductPaths.yesBtn);
-    //     }catch(TimeoutException e){
-    //         e.getStackTrace();
-    //     }
-    // }
+    //delete
+    public void deleteProduct(){
+        try{
+            goToProductModule();
+            condition.clickWhenClickable(ProductPaths.rowSetting);
+            condition.clickWhenClickable(ProductPaths.delete);
+            condition.clickWhenClickable(ProductPaths.yesBtn);
+        }
+        catch(TimeoutException e){
+            e.getStackTrace();
+        }
+    }
 
     private void goToProductModule(){
         try {
-            condition.clickWhenClickable(ProductPaths.rightArrow);
-            condition.clickWhenClickable(ProductPaths.billingMenu);
-            condition.clickWhenClickable(ProductPaths.addNewProduct);
-        }catch (StaleElementReferenceException e) {
-            goToProductModule();
+            Thread.sleep(1000);
+            condition.waitUntilInvisible(ProductPaths.interferingElement);
+            condition.moveToElement(ProductPaths.billingMenu);
+            condition.clickWhenClickable(ProductPaths.list);
         }
         catch (TimeoutException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addNew(){
+        try{
+            condition.clickWhenClickable(ProductPaths.newBtn);
+        }catch(TimeoutException e){
+            e.getStackTrace();
         }
     }
 
@@ -94,8 +118,6 @@ public class Product {
     
             condition.clickWhenClickable(ProductPaths.saveBtn);
 
-        }catch (StaleElementReferenceException e) {
-            addProduct(productName, productCode, productType, productCategory, currencyCode, productPrice, vendorName, manufacturer, isTaxable, status, description);
         }catch (TimeoutException e) {
             e.getStackTrace();
         }

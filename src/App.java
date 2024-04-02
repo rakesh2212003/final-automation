@@ -42,64 +42,63 @@ public class App {
 
     @BeforeClass
     public void TEST_AUTH(){
-        testAuth.performLogin("RakeshRana", "123456");
+        testAuth.login("RakeshRana", "123456");
     }
 
     @Test
     public void TEST_PRODUCT(){
-        testProducts.createProduct(
-            "FFF",
-            "000002",
+        testProducts.create(
+            "ConvergeHub",
+            "000001",
             "Product",
             "Software",
             "USD",
-            "9876",
+            "99999",
             "Ranjan Jana",
             "Ranjan LLC.",
             "YES",
             "ACTIVE",
             "This product is made by team Corelynx"
         );
-        testProducts.editProduct(
-            "SSS",
-            "000002",
+        testProducts.edit(
+            "CLKCLK",
+            "000001",
             "Product",
             "Software",
-            "USD",
-            "9876",
-            "Ranjan Jana",
-            "Ranjan LLC.",
+            "INR",
+            "8888",
+            "MD Shakir",
+            "Shakir LLC.",
             "YES",
             "ACTIVE",
             "This product is made by team Corelynx"
         );
-        testProducts.deleteProduct();
+        testProducts.delete();
     }
 
     @Test
     public void TEST_ESTIMATE(){
-        testProducts.createProduct(
-            "OOO",
-            "000002",
+        testProducts.create(
+            "ConvergeHub",
+            "000001",
             "Product",
             "Software",
             "USD",
-            "9876",
+            "99999",
             "Ranjan Jana",
             "Ranjan LLC.",
             "YES",
             "ACTIVE",
             "This product is made by team Corelynx"
         );
-        testEstimate.createEstimate("USD", "OOO");
-        testEstimate.editEstimate("INR", "XXX");
-        testEstimate.deleteEstimate();
-        testProducts.deleteProduct();
+        testEstimate.create("USD", "OOO");
+        testEstimate.edit("INR", "XXX");
+        testEstimate.delete();
     }
 
     @Test
     public void TEST_INVIOCE(){
-        testProducts.createProduct(
+        testProducts.create(
             "CPM",
             "000002",
             "Product",
@@ -112,17 +111,15 @@ public class App {
             "ACTIVE",
             "This product is made by team Corelynx"
         );
-        testEstimate.createEstimate("USD", "CPM");
-        testInvoice.createInvoice("INR", "CPM");
-        testInvoice.editInvoice("USD", "XXX");
-        testInvoice.deleteInvoice();
-        testProducts.deleteProduct();
-        testEstimate.deleteEstimate();
+        testEstimate.create("USD", "CPM");
+        testInvoice.create("INR", "CPM");
+        testInvoice.edit("USD", "XXX");
+        testInvoice.delete();
     }
 
     @Test
     public void TEST_PAYMENT(){
-        testProducts.createProduct(
+        testProducts.create(
             "CPM",
             "000002",
             "Product",
@@ -135,22 +132,18 @@ public class App {
             "ACTIVE",
             "This product is made by team Corelynx"
         );
-        testEstimate.createEstimate("USD", "CPM");
-        testInvoice.createInvoice("INR", "CPM");
+        testEstimate.create("USD", "CPM");
+        testInvoice.create("INR", "CPM");
         testPayment.create("1234567890", "INR", "800", "Cash");
         testPayment.edit("9876543210", "INR", "900", "Check");
-        
         testPayment.delete();
-        testProducts.deleteProduct();
-        testEstimate.deleteEstimate();
-        testInvoice.deleteInvoice();
     }
 
     @Test
     public void TEST_NOTES(){
-        testNotes.createNote("User", "Rakesh Rana", "This is my note");
-        testNotes.editNote("User", "Rakesh Rana", "This is edited note");
-        testNotes.deleteNote();
+        testNotes.create("User", "Rakesh Rana", "This is my note");
+        testNotes.edit("User", "Rakesh Rana", "This is edited note");
+        testNotes.delete();
     }
 
     @AfterMethod

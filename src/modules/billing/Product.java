@@ -15,16 +15,16 @@ public class Product {
     }
 
     //create
-    public void createProduct(String productName, String productCode, String productType, String productCategory, String currencyCode, String productPrice, String vendorName, String manufacturer, String isTaxable, String status, String description){
-        goToProductModule();
+    public void create(String productName, String productCode, String productType, String productCategory, String currencyCode, String productPrice, String vendorName, String manufacturer, String isTaxable, String status, String description){
+        goToModule();
         addNew();
-        addProduct(productName, productCode, productType, productCategory, currencyCode, productPrice, vendorName, manufacturer, isTaxable, status, description);
+        add(productName, productCode, productType, productCategory, currencyCode, productPrice, vendorName, manufacturer, isTaxable, status, description);
     }
 
     //view
-    public void viewProduct(){
+    public void view(){
         try{
-            goToProductModule();
+            goToModule();
             condition.clickWhenClickable(ProductPaths.rowSetting);
             condition.clickWhenClickable(ProductPaths.details);
         }
@@ -34,12 +34,12 @@ public class Product {
     }
     
     //edit
-    public void editProduct(String productName, String productCode, String productType, String productCategory, String currencyCode, String productPrice, String vendorName, String manufacturer, String isTaxable, String status, String description){
+    public void edit(String productName, String productCode, String productType, String productCategory, String currencyCode, String productPrice, String vendorName, String manufacturer, String isTaxable, String status, String description){
         try{
-            goToProductModule();
+            goToModule();
             condition.clickWhenClickable(ProductPaths.rowSetting);
             condition.clickWhenClickable(ProductPaths.edit);
-            addProduct(productName, productCode, productType, productCategory, currencyCode, productPrice, vendorName, manufacturer, isTaxable, status, description);
+            add(productName, productCode, productType, productCategory, currencyCode, productPrice, vendorName, manufacturer, isTaxable, status, description);
         }
         catch(TimeoutException e){
             e.getStackTrace();
@@ -47,9 +47,9 @@ public class Product {
     }
 
     //delete
-    public void deleteProduct(){
+    public void delete(){
         try{
-            goToProductModule();
+            goToModule();
             condition.clickWhenClickable(ProductPaths.rowSetting);
             condition.clickWhenClickable(ProductPaths.delete);
             condition.clickWhenClickable(ProductPaths.yesBtn);
@@ -59,11 +59,11 @@ public class Product {
         }
     }
 
-    private void goToProductModule(){
+    private void goToModule(){
         try {
             Thread.sleep(1000);
             condition.waitUntilInvisible(ProductPaths.interferingElement);
-            condition.moveToElement(ProductPaths.billingMenu);
+            condition.moveToElement(ProductPaths.menu);
             condition.clickWhenClickable(ProductPaths.list);
         }
         catch (TimeoutException e) {
@@ -86,7 +86,7 @@ public class Product {
         }
     }
 
-    private void addProduct(String productName, String productCode, String productType, String productCategory, String currencyCode, String productPrice, String vendorName, String manufacturer, String isTaxable, String status, String description){
+    private void add(String productName, String productCode, String productType, String productCategory, String currencyCode, String productPrice, String vendorName, String manufacturer, String isTaxable, String status, String description){
         try{
             condition.clearWhenVisible(ProductPaths.productName);
             condition.sendKeysWhenVisible(ProductPaths.productName, productName);

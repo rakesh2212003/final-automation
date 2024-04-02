@@ -14,11 +14,11 @@ public class Auth{
         condition = new Condition(driver);
     }
 
-    public void performLogin(String username, String password){
+    public void login(String username, String password){
         handleLogin(username, password);
         handleProceed();
     }
-    public void performLogout(){
+    public void logout(){
         try{
             condition.clickWhenClickable(AuthPaths.profilePic);
             condition.clickWhenClickable(AuthPaths.logoutBtn);

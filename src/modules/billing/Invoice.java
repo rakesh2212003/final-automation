@@ -15,16 +15,16 @@ public class Invoice {
     }
 
     //create
-    public void createInvoice(String currencyCode, String product){
-        goToInvoiceModule();
+    public void create(String currencyCode, String product){
+        goToModule();
         addNew();
-        addInvoice(currencyCode, product);
+        add(currencyCode, product);
     }
 
     //view
-    public void viewInvoice(){
+    public void view(){
         try{
-            goToInvoiceModule();
+            goToModule();
             condition.clickWhenClickable(InvoicePaths.rowSetting);
             condition.clickWhenClickable(InvoicePaths.details);
         }
@@ -34,12 +34,12 @@ public class Invoice {
     }
 
     //edit
-    public void editInvoice(String currencyCode, String product){
+    public void edit(String currencyCode, String product){
         try{
-            goToInvoiceModule();
+            goToModule();
             condition.clickWhenClickable(InvoicePaths.rowSetting);
             condition.clickWhenClickable(InvoicePaths.edit);
-            addInvoice(currencyCode, product);
+            add(currencyCode, product);
         }
         catch(TimeoutException e){
             e.getStackTrace();
@@ -47,9 +47,9 @@ public class Invoice {
     }
 
     //delete
-    public void deleteInvoice(){
+    public void delete(){
         try{
-            goToInvoiceModule();
+            goToModule();
             condition.clickWhenClickable(InvoicePaths.rowSetting);
             condition.clickWhenClickable(InvoicePaths.delete);
             condition.clickWhenClickable(InvoicePaths.yesBtn);
@@ -59,7 +59,7 @@ public class Invoice {
         }
     }
 
-    private void goToInvoiceModule(){
+    private void goToModule(){
         try {
             Thread.sleep(1000);
             condition.waitUntilInvisible(InvoicePaths.interferingElement);
@@ -86,7 +86,7 @@ public class Invoice {
         }
     }
 
-    private void addInvoice(String currencyCode, String product){
+    private void add(String currencyCode, String product){
         try{
             condition.clickWhenClickable(InvoicePaths.currencyCode);
             condition.clickWhenClickable(InvoicePaths.selectCurrencyCode.get(currencyCode));

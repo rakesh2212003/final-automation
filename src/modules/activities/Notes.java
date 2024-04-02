@@ -15,16 +15,16 @@ public class Notes{
     }
 
     //create
-    public void createNote(String modules, String relateTo, String notes){
-        goToNotesModule();
+    public void create(String modules, String relateTo, String notes){
+        goToModule();
         addNew();
-        addNote(modules, relateTo, notes);
+        add(modules, relateTo, notes);
     }
 
     //view
-    public void viewNote(){
+    public void view(){
         try{
-            goToNotesModule();
+            goToModule();
             condition.clickWhenClickable(NotePaths.rowSetting);
             condition.clickWhenClickable(NotePaths.details);
         }
@@ -34,9 +34,9 @@ public class Notes{
     }
 
     //edit
-    public void editNote(String modules, String relateTo, String notes){
+    public void edit(String modules, String relateTo, String notes){
         try{
-            goToNotesModule();
+            goToModule();
             condition.clickWhenClickable(NotePaths.rowSetting);
             condition.clickWhenClickable(NotePaths.edit);
 
@@ -54,9 +54,9 @@ public class Notes{
     }
 
     //delete
-    public void deleteNote(){
+    public void delete(){
         try{
-            goToNotesModule();
+            goToModule();
             condition.clickWhenClickable(NotePaths.rowSetting);
             condition.clickWhenClickable(NotePaths.delete);
             condition.clickWhenClickable(NotePaths.yesBtn);
@@ -66,7 +66,7 @@ public class Notes{
         }
     }
 
-    private void goToNotesModule(){
+    private void goToModule(){
         try {
             Thread.sleep(1000);
             condition.waitUntilInvisible(NotePaths.interferingElement);
@@ -94,7 +94,7 @@ public class Notes{
         }
     }
 
-    private void addNote(String modules, String relateTo, String notes){
+    private void add(String modules, String relateTo, String notes){
         try{
             condition.clickWhenClickable(NotePaths.modules);
             condition.clickWhenClickable(NotePaths.selectModules.get(modules));

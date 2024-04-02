@@ -15,16 +15,16 @@ public class Estimate {
     }
 
     //create
-    public void createEstimate(String currencyCode, String product){
-        goToEstimateModule();
+    public void create(String currencyCode, String product){
+        goToModule();
         addNew();
-        addEstimate(currencyCode, product);
+        add(currencyCode, product);
     }
 
     //view
-    public void viewEstimate(){
+    public void view(){
         try{
-            goToEstimateModule();
+            goToModule();
             condition.clickWhenClickable(EstimatePaths.rowSetting);
             condition.clickWhenClickable(EstimatePaths.details);
         }
@@ -34,12 +34,12 @@ public class Estimate {
     }
 
     //edit
-    public void editEstimate(String currencyCode, String product){
+    public void edit(String currencyCode, String product){
         try{
-            goToEstimateModule();
+            goToModule();
             condition.clickWhenClickable(EstimatePaths.rowSetting);
             condition.clickWhenClickable(EstimatePaths.edit);
-            addEstimate(currencyCode, product);
+            add(currencyCode, product);
         }
         catch(TimeoutException e){
             e.getStackTrace();
@@ -47,9 +47,9 @@ public class Estimate {
     }
 
     //delete
-    public void deleteEstimate(){
+    public void delete(){
         try{
-            goToEstimateModule();
+            goToModule();
             condition.clickWhenClickable(EstimatePaths.rowSetting);
             condition.clickWhenClickable(EstimatePaths.delete);
             condition.clickWhenClickable(EstimatePaths.yesBtn);
@@ -59,7 +59,7 @@ public class Estimate {
         }
     }
 
-    private void goToEstimateModule(){
+    private void goToModule(){
         try {
             Thread.sleep(1000);
             condition.waitUntilInvisible(EstimatePaths.interferingElement);
@@ -85,7 +85,7 @@ public class Estimate {
         }
     }
 
-    private void addEstimate(String currencyCode, String product){
+    private void add(String currencyCode, String product){
         try{
             condition.clickWhenClickable(EstimatePaths.currencyCode);
             condition.clickWhenClickable(EstimatePaths.selectCurrencyCode.get(currencyCode));

@@ -6,10 +6,10 @@ import org.openqa.selenium.By;
 
 public class ProductPaths {
     //menubar
-    public static By billingMenu = By.xpath("//span[contains(@class,'ico_billing')]");
-    public static By productModule = By.xpath("//span[contains(text(),'Product')]");
+    public static By menu = By.xpath("//span[contains(@class,'ico_billing')]");
+    public static By module = By.xpath("//span[contains(text(),'Product')]");
     public static By list = By.xpath("//a[contains(@href,'/products')]");
-    public static By addNewProduct = By.xpath("//a[contains(@href,'/products/create')]");
+    public static By addNew = By.xpath("//a[contains(@href,'/products/create')]");
 
     //listingpage
     public static By interferingElement = By.xpath("//simple-snack-bar");

@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import modules.activities.Notes;
 import modules.auth.*;
 import modules.billing.*;
 
@@ -19,6 +20,7 @@ public class App {
     private Estimate testEstimate;
     private Invoice testInvoice;
     private Payment testPayment;
+    private Notes testNotes;
 
     @BeforeTest
     public void setUp() {
@@ -32,6 +34,9 @@ public class App {
         testAuth = new Auth(driver);
         testProducts = new Product(driver);
         testEstimate = new Estimate(driver);
+        testInvoice = new Invoice(driver);
+        testPayment = new Payment(driver);
+        testNotes = new Notes(driver);
     }
 
     @BeforeClass
@@ -39,81 +44,119 @@ public class App {
         testAuth.performLogin("RakeshRana", "123456");
     }
 
-    // @Test
-    // public void TEST_PRODUCT(){
-    //     testProducts.createProduct(
-    //         "FFF",
-    //         "000002",
-    //         "Product",
-    //         "Software",
-    //         "USD",
-    //         "9876",
-    //         "Ranjan Jana",
-    //         "Ranjan LLC.",
-    //         "YES",
-    //         "ACTIVE",
-    //         "This product is made by team Corelynx"
-    //     );
-    //     testProducts.editProduct(
-    //         "SSS",
-    //         "000002",
-    //         "Product",
-    //         "Software",
-    //         "USD",
-    //         "9876",
-    //         "Ranjan Jana",
-    //         "Ranjan LLC.",
-    //         "YES",
-    //         "ACTIVE",
-    //         "This product is made by team Corelynx"
-    //     );
-    //     testProducts.editProduct(
-    //         "DDD",
-    //         "000002",
-    //         "Product",
-    //         "Software",
-    //         "USD",
-    //         "9876",
-    //         "Ranjan Jana",
-    //         "Ranjan LLC.",
-    //         "YES",
-    //         "ACTIVE",
-    //         "This product is made by team Corelynx"
-    //     );
-    //     testProducts.deleteProduct();
-    // }
+    @Test
+    public void TEST_PRODUCT(){
+        testProducts.createProduct(
+            "FFF",
+            "000002",
+            "Product",
+            "Software",
+            "USD",
+            "9876",
+            "Ranjan Jana",
+            "Ranjan LLC.",
+            "YES",
+            "ACTIVE",
+            "This product is made by team Corelynx"
+        );
+        testProducts.editProduct(
+            "SSS",
+            "000002",
+            "Product",
+            "Software",
+            "USD",
+            "9876",
+            "Ranjan Jana",
+            "Ranjan LLC.",
+            "YES",
+            "ACTIVE",
+            "This product is made by team Corelynx"
+        );
+        testProducts.deleteProduct();
+    }
 
-    // @Test
-    // public void TEST_ESTIMATE(){
-    //     testProducts.createProduct(
-    //         "myProduct",
-    //         "000001",
-    //         "Product",
-    //         "Software",
-    //         "USD",
-    //         "9999",
-    //         "Ranjan Jana",
-    //         "Ranjan LLC.",
-    //         "YES",
-    //         "ACTIVE",
-    //         "This product is made by team Corelynx"
-    //     );
-    //     testEstimate.createEstimate("USD", "myProduct");
-    // }
+    @Test
+    public void TEST_ESTIMATE(){
+        testProducts.createProduct(
+            "OOO",
+            "000002",
+            "Product",
+            "Software",
+            "USD",
+            "9876",
+            "Ranjan Jana",
+            "Ranjan LLC.",
+            "YES",
+            "ACTIVE",
+            "This product is made by team Corelynx"
+        );
+        testProducts.createProduct(
+            "OOO",
+            "000002",
+            "Product",
+            "Software",
+            "USD",
+            "9876",
+            "Ranjan Jana",
+            "Ranjan LLC.",
+            "YES",
+            "ACTIVE",
+            "This product is made by team Corelynx"
+        );
+        testEstimate.createEstimate("USD", "OOO");
+        testEstimate.editEstimate("INR", "XXX");
+        testEstimate.deleteEstimate();
+    }
 
-    // @Test
-    // public void test4(){
-    // testInvoice = new Invoice(driver);
-    // testInvoice.createInvoice("INR", "convergehub");
-    // // testInvoice.editInvoice("USD", "convergehub");
-    // }
+    @Test
+    public void TEST_INVIOCE(){
+        testProducts.createProduct(
+            "CPM",
+            "000002",
+            "Product",
+            "Software",
+            "USD",
+            "9876",
+            "Ranjan Jana",
+            "Ranjan LLC.",
+            "YES",
+            "ACTIVE",
+            "This product is made by team Corelynx"
+        );
+        testEstimate.createEstimate("USD", "CPM");
+        testInvoice.createInvoice("INR", "CPM");
+        testInvoice.editInvoice("USD", "XXX");
+        testInvoice.deleteInvoice();
+    }
 
-    // @Test
-    // public void test5(){
-    // testPayment = new Payment(driver);
-    // testPayment.createPayment("1234567890", "INR", "9999", "cash");
-    // testPayment.editPayment("9876543210", "INR", "8888", "check");
-    // }
+    @Test
+    public void TEST_PAYMENT(){
+        testProducts.createProduct(
+            "CPM",
+            "000002",
+            "Product",
+            "Software",
+            "USD",
+            "9876",
+            "Ranjan Jana",
+            "Ranjan LLC.",
+            "YES",
+            "ACTIVE",
+            "This product is made by team Corelynx"
+        );
+        testEstimate.createEstimate("USD", "CPM");
+        testInvoice.createInvoice("INR", "CPM");
+        testPayment.create("1234567890", "INR", "800", "Cash");
+        testPayment.edit("9876543210", "INR", "900", "Check");
+        testPayment.delete();
+    }
+
+    @Test
+    public void TEST_NOTES(){
+        testNotes.createNote("User", "Rakesh Rana", "This is my note");
+        testNotes.editNote("User", "Rakesh Rana", "This is edited note");
+        testNotes.deleteNote();
+    }
 
     @AfterMethod
     public void slepeMethod() throws InterruptedException {

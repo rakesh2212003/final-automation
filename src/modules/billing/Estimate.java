@@ -1,13 +1,11 @@
 package modules.billing;
 
 import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
 import conditions.Condition;
-import paths.modulePaths.EstimatePaths;
+import paths.billing.EstimatePaths;
 
 public class Estimate {
     private Condition condition;
@@ -16,29 +14,74 @@ public class Estimate {
         condition = new Condition(driver);
     }
 
+    //create
     public void createEstimate(String currencyCode, String product){
         goToEstimateModule();
+        addNew();
         addEstimate(currencyCode, product);
     }
 
-    // public void editEstimate(String currencyCode, String product){
-    //     condition.clickWhenClickable(EstimatePaths.actionDrp);
-    //     condition.clickWhenClickable(EstimatePaths.editBtn);
-    //     addEstimate(currencyCode, product);
-    // }
+    //view
+    public void viewEstimate(){
+        try{
+            goToEstimateModule();
+            condition.clickWhenClickable(EstimatePaths.rowSetting);
+            condition.clickWhenClickable(EstimatePaths.details);
+        }
+        catch(TimeoutException e){
+            e.getStackTrace();
+        }
+    }
+
+    //edit
+    public void editEstimate(String currencyCode, String product){
+        try{
+            goToEstimateModule();
+            condition.clickWhenClickable(EstimatePaths.rowSetting);
+            condition.clickWhenClickable(EstimatePaths.edit);
+            addEstimate(currencyCode, product);
+        }
+        catch(TimeoutException e){
+            e.getStackTrace();
+        }
+    }
+
+    //delete
+    public void deleteEstimate(){
+        try{
+            goToEstimateModule();
+            condition.clickWhenClickable(EstimatePaths.rowSetting);
+            condition.clickWhenClickable(EstimatePaths.delete);
+            condition.clickWhenClickable(EstimatePaths.yesBtn);
+        }
+        catch(TimeoutException e){
+            e.getStackTrace();
+        }
+    }
 
     private void goToEstimateModule(){
         try {
-            condition.clickWhenClickable(EstimatePaths.rightArrow);
-            condition.clickWhenClickable(EstimatePaths.billingMenu);
-            condition.clickWhenClickable(EstimatePaths.estimateModule);
-            condition.clickWhenClickable(EstimatePaths.addNewEstimate);
-        }catch(ElementClickInterceptedException e){
+            Thread.sleep(1000);
             condition.waitUntilInvisible(EstimatePaths.interferingElement);
+            condition.moveToElement(EstimatePaths.billingMenu);
             condition.clickWhenClickable(EstimatePaths.estimateModule);
-            condition.clickWhenClickable(EstimatePaths.addNewEstimate);
-        }catch (TimeoutException e) {
+            condition.clickWhenClickable(EstimatePaths.list);
+        }
+        catch(ElementClickInterceptedException e){
+            condition.clickWhenClickable(EstimatePaths.list);
+        }
+        catch (TimeoutException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addNew(){
+        try{
+            condition.clickWhenClickable(EstimatePaths.newBtn);
+        }catch(TimeoutException e){
+            e.getStackTrace();
         }
     }
 
@@ -46,13 +89,19 @@ public class Estimate {
         try{
             condition.clickWhenClickable(EstimatePaths.currencyCode);
             condition.clickWhenClickable(EstimatePaths.selectCurrencyCode.get(currencyCode));
+
             condition.clickWhenClickable(EstimatePaths.estimateItems);
-            condition.sendKeysWhenVisible(EstimatePaths.product, product, Keys.ENTER);
+
+            condition.clearWhenVisible(EstimatePaths.product);
+            condition.sendKeysWhenVisible(EstimatePaths.product, product);
+            Thread.sleep(1000);
+
+            condition.clickWhenClickable(EstimatePaths.topProduct);
             condition.clickWhenClickable(EstimatePaths.saveBtn);
-        }catch (StaleElementReferenceException e) {
-            goToEstimateModule();
         }
         catch(TimeoutException e){
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

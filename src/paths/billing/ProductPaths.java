@@ -1,4 +1,4 @@
-package paths.modulePaths;
+package paths.billing;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +13,7 @@ public class ProductPaths {
 
     //listingpage
     public static By interferingElement = By.xpath("//simple-snack-bar");
+    public static By cancelPopup = By.xpath("//span[contains(@class,'mat-button-wrapper') and contains(text(),'x')]");
     public static By newBtn = By.xpath("//a[contains(@class,'pink-button')]/span[contains(text(),'New')]");
     public static By rowSetting = By.xpath("//tbody/tr[1]/td//div[contains(@class,'row-setting')]");
     public static By details = By.xpath("//a[contains(text(),'Details')]");

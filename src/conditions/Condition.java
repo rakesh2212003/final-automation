@@ -10,10 +10,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Condition {
+    private WebDriver driver;
     private WebDriverWait wait;
     private Actions actions;
 
     public Condition(WebDriver driver){
+        this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         actions = new Actions(driver);
     }
@@ -39,5 +41,12 @@ public class Condition {
     }
     public void waitUntilInvisible(By locator){
         wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    public void switchToIframe(By locator){
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
+    }
+    public void switchFromIframe(){
+        driver.switchTo().defaultContent();
     }
 }

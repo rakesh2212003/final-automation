@@ -1,66 +1,109 @@
 package modules.billing;
 
-import java.time.Duration;
-
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import paths.menuPaths.BillingPaths;
-import paths.modulePaths.PaymentPaths;
+import conditions.Condition;
+import paths.billing.PaymentPaths;
 
 public class Payment {
-    WebDriver driver;
-    WebDriverWait wait;
-
-    BillingPaths billingMenuPaths;
-    PaymentPaths paymentPaths;
+    private Condition condition;
 
     public Payment(WebDriver driver){
-        this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        billingMenuPaths = new BillingPaths();
-        paymentPaths = new PaymentPaths();
+        condition = new Condition(driver);
     }
 
-    public void createPayment(String transactionId, String currencyCode, String amount, String paymentType){
-        goToPaymentModule();
-        addPayment(transactionId, currencyCode, amount, paymentType);
+    //create
+    public void create(String transactionId, String currencyCode, String amount, String paymentType){
+        goToModule();
+        addNew();
+        add(transactionId, currencyCode, amount, paymentType);
     }
 
-    public void editPayment(String transactionId, String currencyCode, String amount, String paymentType){
-        wait.until(ExpectedConditions.elementToBeClickable(paymentPaths.actionDrp)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(paymentPaths.editBtn)).click();
-        addPayment(transactionId, currencyCode, amount, paymentType);
+    //view
+    public void view(){
+        try{
+            goToModule();
+            condition.clickWhenClickable(PaymentPaths.rowSetting);
+            condition.clickWhenClickable(PaymentPaths.details);
+        }
+        catch(TimeoutException e){
+            e.getStackTrace();
+        }
     }
 
-    private void goToPaymentModule(){
+    //edit
+    public void edit(String transactionId, String currencyCode, String amount, String paymentType){
+        try{
+            goToModule();
+            condition.clickWhenClickable(PaymentPaths.rowSetting);
+            condition.clickWhenClickable(PaymentPaths.edit);
+            add(transactionId, currencyCode, amount, paymentType);
+        }
+        catch(TimeoutException e){
+            e.getStackTrace();
+        }
+    }
+
+    //delete
+    public void delete(){
+        try{
+            goToModule();
+            condition.clickWhenClickable(PaymentPaths.rowSetting);
+            condition.clickWhenClickable(PaymentPaths.delete);
+            condition.clickWhenClickable(PaymentPaths.yesBtn);
+        }
+        catch(TimeoutException e){
+            e.getStackTrace();
+        }
+    }
+
+    private void goToModule(){
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(billingMenuPaths.billingMenu)).click();
             Thread.sleep(1000);
-            wait.until(ExpectedConditions.elementToBeClickable(billingMenuPaths.paymentModule)).click();
-            wait.until(ExpectedConditions.elementToBeClickable(paymentPaths.list)).click();
+            condition.waitUntilInvisible(PaymentPaths.interferingElement);
+            condition.moveToElement(PaymentPaths.menu);
+            condition.clickWhenClickable(PaymentPaths.module);
             Thread.sleep(1000);
-            wait.until(ExpectedConditions.elementToBeClickable(paymentPaths.newBtn)).click();
-            
+            condition.clickWhenClickable(PaymentPaths.list);
+        }
+        catch(ElementClickInterceptedException e){
+            condition.clickWhenClickable(PaymentPaths.list);
+        }
+        catch (TimeoutException e) {
+            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private void addPayment(String transactionId, String currencyCode, String amount, String paymentType){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(paymentPaths.transactionId)).clear();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(paymentPaths.transactionId)).sendKeys(transactionId);
+    private void addNew(){
+        try{
+            condition.clickWhenClickable(PaymentPaths.newBtn);
+        }catch(TimeoutException e){
+            e.getStackTrace();
+        }
+    }
 
-        wait.until(ExpectedConditions.elementToBeClickable(paymentPaths.CurrencyCode)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(paymentPaths.selectCurrencyCode.get(currencyCode))).click();
+    private void add(String transactionId, String currencyCode, String amount, String paymentType){
+        try{
+            condition.clearWhenVisible(PaymentPaths.transactionId);
+            condition.sendKeysWhenVisible(PaymentPaths.transactionId, transactionId);
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(paymentPaths.amount)).clear();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(paymentPaths.amount)).sendKeys(amount);
+            condition.clickWhenClickable(PaymentPaths.CurrencyCode);
+            condition.clickWhenClickable(PaymentPaths.selectCurrencyCode.get(currencyCode));
 
-        wait.until(ExpectedConditions.elementToBeClickable(paymentPaths.paymentType)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(paymentPaths.selectPaymentType.get(paymentType))).click();
+            condition.clearWhenVisible(PaymentPaths.amount);
+            condition.sendKeysWhenVisible(PaymentPaths.amount, amount);
 
-        wait.until(ExpectedConditions.elementToBeClickable(paymentPaths.saveBtn)).click();
+            condition.clickWhenClickable(PaymentPaths.paymentType);
+            condition.clickWhenClickable(PaymentPaths.selectPaymentType.get(paymentType));
+
+            condition.clickWhenClickable(PaymentPaths.saveBtn);
+        }
+        catch(TimeoutException e){
+            e.printStackTrace();
+        }
     }
 }

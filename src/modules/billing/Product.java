@@ -1,10 +1,11 @@
 package modules.billing;
 
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
 import conditions.Condition;
-import paths.modulePaths.ProductPaths;
+import paths.billing.ProductPaths;
 
 public class Product {
     private Condition condition;
@@ -26,7 +27,8 @@ public class Product {
             goToProductModule();
             condition.clickWhenClickable(ProductPaths.rowSetting);
             condition.clickWhenClickable(ProductPaths.details);
-        }catch(TimeoutException e){
+        }
+        catch(TimeoutException e){
             e.getStackTrace();
         }
     }
@@ -66,7 +68,8 @@ public class Product {
         }
         catch (TimeoutException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -74,7 +77,11 @@ public class Product {
     private void addNew(){
         try{
             condition.clickWhenClickable(ProductPaths.newBtn);
-        }catch(TimeoutException e){
+        }
+        catch(ElementClickInterceptedException e){
+            addNew();
+        }
+        catch(TimeoutException e){
             e.getStackTrace();
         }
     }

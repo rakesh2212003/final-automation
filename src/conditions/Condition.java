@@ -10,35 +10,31 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Condition {
-    private WebDriver driver;
+    private WebDriverWait wait;
     private Actions actions;
 
     public Condition(WebDriver driver){
-        this.driver = driver;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         actions = new Actions(driver);
     }
     
     public void clickWhenClickable(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
         element.click();
     }
 
     public void sendKeysWhenVisible(By locator, CharSequence... keysToSend) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         element.sendKeys(keysToSend);
     }
 
     public void clearWhenVisible(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         element.clear();
     }
 
     public void moveToElement(By locator){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        actions.moveToElement(element).build().perform();
+        actions.moveToElement(element).perform();
     }
 }

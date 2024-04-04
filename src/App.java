@@ -30,14 +30,14 @@ public class App {
         options.addArguments("--start-maximized");
         options.addArguments("--disable-notifications");
         driver = new ChromeDriver(options);
-        driver.get("https://stage.convergehub.app/auth/login");
+        driver.get("http://10.10.10.13:4200/auth/login");
 
         testAuth = new Auth(driver);
-        testProducts = new Product(driver);
-        testEstimate = new Estimate(driver);
-        testInvoice = new Invoice(driver);
+        // testProducts = new Product(driver);
+        // testEstimate = new Estimate(driver);
+        // testInvoice = new Invoice(driver);
         testPayment = new Payment(driver);
-        testNotes = new Notes(driver);
+        // testNotes = new Notes(driver);
     }
 
     @BeforeClass
@@ -121,21 +121,21 @@ public class App {
 
     @Test
     public void TEST_PAYMENT(){
-        testProducts.create(
-            "CPM",
-            "000002",
-            "Product",
-            "Software",
-            "USD",
-            "9876",
-            "Ranjan Jana",
-            "Ranjan LLC.",
-            "YES",
-            "ACTIVE",
-            "This product is made by team Corelynx"
-        );
-        testEstimate.create("USD", "CPM");
-        testInvoice.create("INR", "CPM");
+        // testProducts.create(
+        //     "CPM",
+        //     "000002",
+        //     "Product",
+        //     "Software",
+        //     "USD",
+        //     "9876",
+        //     "Ranjan Jana",
+        //     "Ranjan LLC.",
+        //     "YES",
+        //     "ACTIVE",
+        //     "This product is made by team Corelynx"
+        // );
+        // testEstimate.create("USD", "CPM");
+        // testInvoice.create("INR", "CPM");
         testPayment.create("1234567890", "INR", "800", "Cash");
         testPayment.edit("9876543210", "INR", "900", "Check");
         testPayment.delete();

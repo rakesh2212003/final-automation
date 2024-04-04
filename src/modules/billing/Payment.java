@@ -1,109 +1,63 @@
 package modules.billing;
 
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
 import conditions.Condition;
 import paths.billing.PaymentPaths;
 
-public class Payment {
-    private Condition condition;
+public class Payment extends Condition implements PaymentPaths {
 
-    public Payment(WebDriver driver){
-        condition = new Condition(driver);
+    public Payment(WebDriver driver) {
+        super(driver);
     }
 
-    //create
-    public void create(String transactionId, String currencyCode, String amount, String paymentType){
+    public void create(String transactionId, String currencyCode, String amount, String paymentType) {
         goToModule();
-        addNew();
+        clickWhenClickable(newBtn);
         add(transactionId, currencyCode, amount, paymentType);
+        cancelPopup(popup);
     }
 
-    //view
-    public void view(){
-        try{
-            goToModule();
-            condition.clickWhenClickable(PaymentPaths.rowSetting);
-            condition.clickWhenClickable(PaymentPaths.details);
-        }
-        catch(TimeoutException e){
-            e.getStackTrace();
-        }
+    public void view() {
+        goToModule();
+        clickWhenClickable(rowSetting);
+        clickWhenClickable(details);
     }
 
-    //edit
-    public void edit(String transactionId, String currencyCode, String amount, String paymentType){
-        try{
-            goToModule();
-            condition.clickWhenClickable(PaymentPaths.rowSetting);
-            condition.clickWhenClickable(PaymentPaths.edit);
-            add(transactionId, currencyCode, amount, paymentType);
-        }
-        catch(TimeoutException e){
-            e.getStackTrace();
-        }
+    public void edit(String transactionId, String currencyCode, String amount, String paymentType) {
+        goToModule();
+        clickWhenClickable(rowSetting);
+        clickWhenClickable(edit);
+        add(transactionId, currencyCode, amount, paymentType);
+        cancelPopup(popup);
     }
 
-    //delete
-    public void delete(){
-        try{
-            goToModule();
-            condition.clickWhenClickable(PaymentPaths.rowSetting);
-            condition.clickWhenClickable(PaymentPaths.delete);
-            condition.clickWhenClickable(PaymentPaths.yesBtn);
-        }
-        catch(TimeoutException e){
-            e.getStackTrace();
-        }
+    public void delete() {
+        goToModule();
+        clickWhenClickable(rowSetting);
+        clickWhenClickable(delete);
+        clickWhenClickable(yesBtn);
+        cancelPopup(popup);
     }
 
-    private void goToModule(){
-        try {
-            Thread.sleep(1000);
-            condition.waitUntilInvisible(PaymentPaths.interferingElement);
-            condition.moveToElement(PaymentPaths.menu);
-            condition.clickWhenClickable(PaymentPaths.module);
-            Thread.sleep(1000);
-            condition.clickWhenClickable(PaymentPaths.list);
-        }
-        catch(ElementClickInterceptedException e){
-            condition.clickWhenClickable(PaymentPaths.list);
-        }
-        catch (TimeoutException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private void goToModule() {
+        // cancelPopup(popup);
+        moveToElement(menu);
+        clickWhenClickable(module);
+        clickWhenClickable(list);
     }
 
-    private void addNew(){
-        try{
-            condition.clickWhenClickable(PaymentPaths.newBtn);
-        }catch(TimeoutException e){
-            e.getStackTrace();
-        }
-    }
+    private void add(String transactionId, String currencyCode, String amount, String paymentType) {
+        sendKeysWhenVisible(transactionIdInput, transactionId);
 
-    private void add(String transactionId, String currencyCode, String amount, String paymentType){
-        try{
-            condition.clearWhenVisible(PaymentPaths.transactionId);
-            condition.sendKeysWhenVisible(PaymentPaths.transactionId, transactionId);
+        clickWhenClickable(currencyCodeDrp);
+        clickWhenClickable(selectCurrencyCodeDrp.get(currencyCode));
 
-            condition.clickWhenClickable(PaymentPaths.CurrencyCode);
-            condition.clickWhenClickable(PaymentPaths.selectCurrencyCode.get(currencyCode));
+        sendKeysWhenVisible(amountInput, amount);
 
-            condition.clearWhenVisible(PaymentPaths.amount);
-            condition.sendKeysWhenVisible(PaymentPaths.amount, amount);
+        clickWhenClickable(paymentTypeDrp);
+        clickWhenClickable(selectPaymentTypeDrp.get(paymentType));
 
-            condition.clickWhenClickable(PaymentPaths.paymentType);
-            condition.clickWhenClickable(PaymentPaths.selectPaymentType.get(paymentType));
-
-            condition.clickWhenClickable(PaymentPaths.saveBtn);
-        }
-        catch(TimeoutException e){
-            e.printStackTrace();
-        }
+        clickWhenClickable(saveBtn);
     }
 }
